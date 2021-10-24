@@ -1,19 +1,19 @@
 {
   "users": [
     {
-      "username": "gonzalo del gaudio",
-      "email": "gonzalodelgaudio@gmail.com",
-      "password": "asd"
+      "username": "test",
+      "email": "test@test.com",
+      "password": "test"
     },
     {
-      "username": "franco del gaudio",
-      "email": "francodelgaudio@gmail.com",
-      "password": "qwe"
+      "username": "test2",
+      "email": "test2@test.com",
+      "password": "test"
     },
     {
-      "username": "martin del gaudio",
-      "email": "martindelgaudio@gmail.com",
-      "password": "zxc"
+      "username": "test3",
+      "email": "test3@test.com",
+      "password": "test"
     }
   ]
 }
