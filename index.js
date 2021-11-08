@@ -9,8 +9,14 @@ import connectDB from './src/config/db.js';
 import config from './src/config.js';
 import tokenChecker from './src/tokenChecker.js';
 import mongoose from 'mongoose';
+import User from './src/models/user.js';
 
 connectDB();
+
+// mongoose test:
+const res = await User.findOne();
+console.log(res);
+
 
 app.locals = {};
 app.locals.tokenList = {};

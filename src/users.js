@@ -1,17 +1,17 @@
 export default {
   "users": [
     {
-      "username": "test",
+      "username": "OLDtest",
       "email": "test@test.com",
       "password": "test"
     },
     {
-      "username": "test2",
+      "username": "OLDtest2",
       "email": "test2@test.com",
       "password": "test"
     },
     {
-      "username": "test3",
+      "username": "OLDtest3",
       "email": "test3@test.com",
       "password": "test"
     }
