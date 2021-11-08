@@ -1,3 +1,4 @@
+export default
 {
     "secret": "some-secret-shit-goes-here",
     "refreshTokenSecret": "some-secret-refresh-token-shit",

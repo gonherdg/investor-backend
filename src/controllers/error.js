@@ -1,4 +1,4 @@
-const { NextFunction, Request, Response } = require("express");
+// import { NextFunction, Request, Response } from "express";
 
 const handler = (callback) => {
   return async (req, res, next) => {
@@ -13,4 +13,4 @@ const handler = (callback) => {
   };
 };
 
-module.exports = handler;
+export default handler;

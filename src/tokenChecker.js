@@ -1,5 +1,6 @@
-const jwt = require('jsonwebtoken')
-const config = require('./config')
+// import { Request, Response, NextFunction } from "express";
+import jwt from 'jsonwebtoken';
+import config from './config.js';
 
 const blackList = ['eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzM3OTU5NjYsImV4cCI6MTYzMzc5Njg2Nn0.hpb6r9kxwBTy2xs-UXXx_Ow7rvvC67sc8eg_kuO2LEA'];
 
@@ -7,7 +8,7 @@ const isInBlackList = ((token) => {
   return (blackList.includes(token))
 });
 
-module.exports = (req,res,next) => {
+export default (req, res, next) => {
   //console.log("req:",req.body);
   //console.log("req.query:",req.query);
   //console.log("res:",res);
@@ -47,9 +48,10 @@ module.exports = (req,res,next) => {
   } else {
     // if there is no token
     // return an error
-    return res.status(403).send({
-        "error": true,
-        "message": 'No token provided.'
-    });
+    const response = {
+      "error": true,
+      "message": 'No token provided.'
+    };
+    return res.status(403).send(response);
   }
 }

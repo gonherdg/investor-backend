@@ -1,7 +1,7 @@
-const express = require('express'); 
-const tokenChecker = require('../tokenChecker');
-const handler = require('../controllers/error');
-const { alltokens, login, token, secure, userData, logout } = require('../controllers/auth');
+import express from 'express'; 
+import tokenChecker from '../tokenChecker.js';
+import handler from '../controllers/error.js';
+import { alltokens, login, token, secure, userData, logout } from '../controllers/auth.js';
 //import { login, signup, verify, refresh, logout, regenerate } from "src/controllers/auth";
 //import { authAccessToken, authRefreshToken } from "src/config/passport";
 
@@ -24,5 +24,5 @@ router.get("/verify", authAccessToken, handler(verify));
 router.get("/refresh", authRefreshToken, handler(refresh));
 router.get("/regenerate", authRefreshToken, handler(regenerate));
 */
-module.exports = router;
+export default router;
 

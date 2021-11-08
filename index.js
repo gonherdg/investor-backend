@@ -1,20 +1,25 @@
-const express = require('express')
-const bodyParser = require('body-parser')
+import express from 'express'
+import bodyParser from 'body-parser'
 const router = express.Router()
-const config = require('./src/config')
 const app = express()
-const cors = require('cors');
-const helmet = require('helmet');
-const authRoutes = require('./src/routes/auth.js');
+import cors from 'cors'
+import helmet from 'helmet'
+import authRoutes from './src/routes/auth.js';
+import connectDB from './src/config/db.js';
+import config from './src/config.js';
+import tokenChecker from './src/tokenChecker.js';
+import mongoose from 'mongoose';
 
-app.g = {};
-app.g.tokenList = {};
+connectDB();
+
+app.locals = {};
+app.locals.tokenList = {};
 
 app.use(helmet());
 app.disable('x-powered-by');
 app.use(cors());
 
-router.get('/', (req,res) => {
+router.get('/', (req, res) => {
     console.log("GET /");
     res.send('Ok');
 })
@@ -26,7 +31,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api", router);
 
 // All queries below this tokenChecker will be secured by token
-router.use(require('./src/tokenChecker'))
+router.use(tokenChecker);
 
 app.listen(config.port || process.env.port || 3000); 
 

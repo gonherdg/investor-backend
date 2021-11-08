@@ -1,7 +1,7 @@
-const users = require('./users');
+import users from './users.js';
 
 
-exports.getUserByEmail = (app, email) => {
+const getUserByEmail = (app, email) => {
   const sEmail = email; //JSON.stringify(email);
   for (u of users.users) {
     const uEmail = u.email;
@@ -14,7 +14,7 @@ exports.getUserByEmail = (app, email) => {
 };
 
 
-exports.getUserByToken = (app, token) => {
+const getUserByToken = (app, token) => {
   let count = 0;
   console.log(app.g.tokenList);
   for (t in app.g.tokenList) {
@@ -31,4 +31,7 @@ exports.getUserByToken = (app, token) => {
   return "NO SE PUDO ENCONTRAR";
 }
 
-
+export default {
+  getUserByEmail,
+  getUserByToken
+}

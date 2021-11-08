@@ -1,0 +1,19 @@
+{
+  "port": 8080,
+  "db": {
+    "username": "app-test",
+    "password": "app-test",
+    "name": "investor",
+    "uriOLD": "mongodb+srv://menu:RlBIsTMUUSO20z1R@cluster0.nkaug.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "uri": "mongodb+srv://app-user:app-user@my-private-cluster.n1yoq.mongodb.net/my-investor-sim"
+  },
+  "cloudinary": {
+    "cloud_name": "musix",
+    "api_key": "675286219511587",
+    "api_secret": "slNvOfOKGBFHuwxB5ViPiNuC0LE"
+  },
+  "newfromproduction": "",
+  "jwt_access_secret": "your_jwt_secret",
+  "jwt_refresh_secret": "your_jwt_refre_secret",
+  "stripeSK": "sk_test_51IeztZC0dp9mfv2GY6RIYYGQVj63Y1OWgYTNDgp1KRwYSiScIXB574jaooiL0ALY60y8WXV2M6IITygMAVglUScv00g5oB4wrR"
+}

@@ -1,7 +1,7 @@
-const express = require('express');
-const helpers = require('../helpers');
-const jwt = require('jsonwebtoken')
-const config = require('../config')
+import express from 'express';
+import helpers from '../helpers.js';
+import jwt from 'jsonwebtoken';
+import config from '../config.js';
 
 const alltokens = async (req, res) => {
     console.log("GET /alltokens");
@@ -110,7 +110,7 @@ const logout = async (req, res) => {
 };
 
 
-module.exports = { 
+export { 
   alltokens,
   login,
   token,
