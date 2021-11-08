@@ -2,6 +2,7 @@ import express from 'express';
 import helpers from '../helpers.js';
 import jwt from 'jsonwebtoken';
 import config from '../config.js';
+import User from '../models/user.js';
 
 const alltokens = async (req, res) => {
     console.log("GET /alltokens");
@@ -23,11 +24,12 @@ const login = async (req, res) => {
       "password": postData.password,
       "name": postData.name
   }
-  //console.log("postData.email:",postData.email);
 
-  // do the database authentication here, with user name and password combination.
-  const dbUser = helpers.getUserByEmail(req.app, postData.email);
-  //console.log(dbUser);
+  // Find user with given data:
+  const dbUser = await User.findOne({ email: user.email, password: user.password }).exec();
+
+  // TEMP Find user in hardcoded data:
+  // const dbUser = helpers.getUserByEmail(req.app, postData.email);
 
   if (dbUser){
     if (user.email === dbUser.email && user.password === dbUser.password){
@@ -57,6 +59,47 @@ const login = async (req, res) => {
   req.app.g.tokenList[refreshToken] = response
   console.log("TOKEN LIST:",req.app.g.tokenList);
   res.status(200).json(response);
+};
+
+
+const signup = async (req, res) => {
+  console.log("POST /signup");
+
+  if (req.body == undefined) {
+    res.status(403).json({"error": "Not signup info provided"});
+    return;
+  };
+
+  let user = {};
+  try {
+    const postData = req.body;
+    user = {
+        "email": postData.email,
+        "password": postData.password,
+        "name": postData.name,
+        "type": postData.type,
+    }
+  } catch (ex){
+    const errorMsg = "Body data doesn't look like user info";
+    console.error(errorMsg, req.body);
+    res.send(errorMsg);
+    return;
+  }
+  
+  const dbUser = await User.find({ email: user.email }).exec();
+  console.log("dbUser:", dbUser);
+
+  if (dbUser.length > 0) {
+    const errorMsg = "There is a user already registered with that email address.";
+    console.error(errorMsg, req.body);
+    res.send(errorMsg);
+    return;
+  }
+  
+  const newDbUser = await User.create(user);
+  console.log("USER CREATED: ", newDbUser);
+  res.json(newDbUser);
+  newDbUser.save();
 };
 
 
@@ -117,4 +160,5 @@ export {
   secure,
   userData,
   logout,
+  signup,
 };

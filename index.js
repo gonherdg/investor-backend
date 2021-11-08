@@ -13,13 +13,8 @@ import User from './src/models/user.js';
 
 connectDB();
 
-// mongoose test:
-const res = await User.findOne();
-console.log(res);
-
-
-app.locals = {};
-app.locals.tokenList = {};
+app.g = {};
+app.g.tokenList = {};
 
 app.use(helmet());
 app.disable('x-powered-by');
@@ -37,7 +32,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api", router);
 
 // All queries below this tokenChecker will be secured by token
-router.use(tokenChecker);
+// router.use(tokenChecker);
 
 app.listen(config.port || process.env.port || 3000); 
 

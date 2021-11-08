@@ -3,7 +3,7 @@ import users from './users.js';
 
 const getUserByEmail = (app, email) => {
   const sEmail = email; //JSON.stringify(email);
-  for (u of users.users) {
+  for (let u of users.users) {
     const uEmail = u.email;
     if (uEmail === sEmail) {
       console.log("ENCONTRADO!");
@@ -17,7 +17,7 @@ const getUserByEmail = (app, email) => {
 const getUserByToken = (app, token) => {
   let count = 0;
   console.log(app.g.tokenList);
-  for (t in app.g.tokenList) {
+  for (let t in app.g.tokenList) {
     count ++;
     console.log(t);
     console.log(" ");
