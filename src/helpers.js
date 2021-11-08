@@ -19,9 +19,9 @@ const getUserByToken = (app, token) => {
   console.log(app.g.tokenList);
   for (let t in app.g.tokenList) {
     count ++;
-    console.log(t);
-    console.log(" ");
-    console.log("CREO QUE ES ESTO",app.g.tokenList[t]);
+    //console.log(t);
+    //console.log(" ");
+    //console.log("CREO QUE ES ESTO",app.g.tokenList[t]);
     if (app.g.tokenList[t].token === token) {
       console.log("GETUSERBYTOKEN:",app.g.tokenList[t].email);
       return app.g.tokenList[t];

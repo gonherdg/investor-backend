@@ -3,6 +3,6 @@ export default
     "secret": "some-secret-shit-goes-here",
     "refreshTokenSecret": "some-secret-refresh-token-shit",
     "port": 3000,
-    "tokenLife": 5,
+    "tokenLife": 4,
     "refreshTokenLife": 86400
 }

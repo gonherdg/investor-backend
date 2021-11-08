@@ -108,8 +108,6 @@ const token = async (req, res) => {
   // refresh the damn token
   const postData = req.body
 
-  //console.log("token req.body:",req.body);
-
   // if refresh token exists
   if((postData.refreshToken) && (postData.refreshToken in req.app.g.tokenList)) {
     const user = {
@@ -121,7 +119,6 @@ const token = async (req, res) => {
         "token": token,
     }
     // update the token in the list
-    const oldToken = token;
     //console.log(req.app.g.tokenList[postData.refreshToken]);
     req.app.g.tokenList[postData.refreshToken].token = token
     res.status(200).json(response);        
@@ -138,17 +135,21 @@ const secure = async (req, res) => {
 
 const userData = async (req, res) => {
   console.log("GET /userdata");
-  const user = helpers.getUserByToken(req.app, req.headers['x-access-token']);
+  //const user = helpers.getUserByToken(req.app, req.headers['x-access-token']);
   //console.log("REQ HEADERS X-ACCESS-TOKEN", req.headers['x-access-token']);
   //console.log("USER:",user);
-  let result = { ...helpers.getUserByEmail(req.app, user.email) };
+  // let result = { ...helpers.getUserByEmail(req.app, user.email) };
+  //const userData = await User.findOne({"email": user.email});
+
   // Borro el password para no enviarlo por internet.
-  result.password = '';
-  res.json(result);
+  //userData.password = '';
+  res.json(req.user);
 };
 
 const logout = async (req, res) => {
+  const user = req.body;
   console.log("GET /logout");
+  await User.updateOne({ _id: user._id }, { refreshToken: undefined }, { upsert: true }).exec();
   res.send("Logged out!");
 };
 
