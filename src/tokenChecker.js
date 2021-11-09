@@ -42,9 +42,16 @@ export default async (req, res, next) => {
 
   const user = helpers.getUserByToken(req.app, req.headers['x-access-token']);
   if (user) {
-    const userData = await User.findOne({"email": user.email});
-    userData.password = '';
-    req.user = userData;
+    const dbUser = await User.findOne({"email": user.email});
+    console.log("tokenChecker:USER and dbUSER:", user, dbUser);
+    if (dbUser){
+      dbUser.password = '';
+      req.user = dbUser;
+    } else {
+      req.user = undefined;
+    }
+  } else {
+    req.user = undefined;
   }
   next();
 }

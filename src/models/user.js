@@ -23,6 +23,10 @@ const UserSchema = new Schema(
     refreshToken: {
       type: String,
       require: false
+    },
+    wallet: {
+      type: Object,
+      require: false
     }
   },
   {

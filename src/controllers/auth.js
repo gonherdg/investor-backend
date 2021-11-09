@@ -56,6 +56,7 @@ const login = async (req, res) => {
       "token": token,
       "refreshToken": refreshToken,
   }
+  await User.updateOne({ _id: dbUser._id }, { refreshToken: refreshToken }, { upsert: true }).exec();
   req.app.g.tokenList[refreshToken] = response
   console.log("TOKEN LIST:",req.app.g.tokenList);
   res.status(200).json(response);
@@ -96,6 +97,9 @@ const signup = async (req, res) => {
     return;
   }
   
+  // Add 1000.00USDT to user's wallet to start with:
+  user.wallet = {USDT: 1000.00, BTC: 0.02};
+
   const newDbUser = await User.create(user);
   console.log("USER CREATED: ", newDbUser);
   res.json(newDbUser);
@@ -109,7 +113,8 @@ const token = async (req, res) => {
   const postData = req.body
 
   // if refresh token exists
-  if((postData.refreshToken) && (postData.refreshToken in req.app.g.tokenList)) {
+  if (postData.refreshToken && await User.findOne({refreshToken: postData.refreshToken}).exec()) {
+  //if((postData.refreshToken) && (postData.refreshToken in req.app.g.tokenList)) {
     const user = {
         "email": postData.email,
         "name": postData.name
@@ -138,12 +143,13 @@ const userData = async (req, res) => {
   //const user = helpers.getUserByToken(req.app, req.headers['x-access-token']);
   //console.log("REQ HEADERS X-ACCESS-TOKEN", req.headers['x-access-token']);
   //console.log("USER:",user);
-  // let result = { ...helpers.getUserByEmail(req.app, user.email) };
+  //let result = { ...helpers.getUserByEmail(req.app, user.email) };
   //const userData = await User.findOne({"email": user.email});
-
   // Borro el password para no enviarlo por internet.
   //userData.password = '';
-  res.json(req.user);
+  console.log("req.user:", req.user);
+  const userData = req.user;
+  res.json(userData);
 };
 
 const logout = async (req, res) => {

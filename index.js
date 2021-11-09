@@ -5,6 +5,7 @@ const app = express()
 import cors from 'cors'
 import helmet from 'helmet'
 import authRoutes from './src/routes/auth.js';
+import walletRoutes from './src/routes/wallet.js';
 import connectDB from './src/config/db.js';
 import config from './src/config.js';
 import tokenChecker from './src/tokenChecker.js';
@@ -29,6 +30,7 @@ router.get('/', (req, res) => {
 // No token-required routes:
 app.use(bodyParser.json())
 app.use("/api/auth", authRoutes);
+app.use("/api/wallet", walletRoutes);
 app.use("/api", router);
 
 // All queries below this tokenChecker will be secured by token
