@@ -56,9 +56,29 @@ const exchange = async (req, res) => {
   res.json({"state":"Successfully updated wallet", dropping, gaining});
 };
 
+const deposit = async (req, res) => {
+  console.log("POST /deposit");
+  const user = req.user;
+  const deposit = req.body.deposit;
+  const depositCurrency = Object.keys(deposit)[0];
+  const depositValue = Object.values(deposit)[0];
+  const curValue = user.wallet[depositCurrency];
+
+  let resultDeposit = depositValue;
+  if (curValue)
+    resultDeposit = curValue + depositValue;
+
+  await User.updateOne({ _id: user._id }, {
+     wallet: {...user.wallet, 
+      [depositCurrency]: resultDeposit
+    }}, { upsert: true }).exec();
+  res.json({"state":"Successfully deposit", depositCurrency, resultDeposit});
+};
+
+
 export { 
   getMyCryptos,
   setMyCryptos,
   exchange,
+  deposit
 };
-
