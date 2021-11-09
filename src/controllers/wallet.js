@@ -36,7 +36,7 @@ const exchange = async (req, res) => {
   const curGainValue = user.wallet[gainingCurrency];
 
   let resultDrop = 0.0;
-  if (curDropValue && curDropValue > droppingValue)
+  if (curDropValue && curDropValue >= droppingValue)
     resultDrop = curDropValue - droppingValue;
   else {
     console.log("Error: not enough money to make that transaction.");
@@ -75,10 +75,35 @@ const deposit = async (req, res) => {
   res.json({"state":"Successfully deposit", depositCurrency, resultDeposit});
 };
 
+const withdraw = async (req, res) => {
+  console.log("POST /deposit");
+  const user = req.user;
+  const withdraw = req.body.withdraw;
+  const withdrawCurrency = Object.keys(withdraw)[0];
+  const withdrawValue = Object.values(withdraw)[0];
+  const curValue = user.wallet[withdrawCurrency];
+
+  let resultWithdraw = 0.0;
+  if (curValue && curValue >= withdrawValue)
+    resultWithdraw = curValue - withdrawValue;
+  else {
+    console.log("Error: not enough money to withdraw.");
+    res.json({"state":"Error: not enough money to withdraw."});
+    return;
+  }
+
+  await User.updateOne({ _id: user._id }, {
+     wallet: {...user.wallet, 
+      [withdrawCurrency]: resultWithdraw
+    }}, { upsert: true }).exec();
+  res.json({"state":"Successfully withdraw", withdrawCurrency, resultWithdraw});
+};
+
 
 export { 
   getMyCryptos,
   setMyCryptos,
   exchange,
-  deposit
+  deposit,
+  withdraw
 };
