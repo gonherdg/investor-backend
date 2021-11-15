@@ -18,7 +18,7 @@ const login = async (req, res) => {
     return;
   };
 
-  const postData = req.body[0];
+  const postData = req.body;
   const user = {
       "email": postData.email,
       "password": postData.password,
@@ -58,7 +58,7 @@ const login = async (req, res) => {
   }
   await User.updateOne({ _id: dbUser._id }, { refreshToken: refreshToken }, { upsert: true }).exec();
   req.app.g.tokenList[refreshToken] = response
-  console.log("TOKEN LIST:",req.app.g.tokenList);
+  //console.log("TOKEN LIST:",req.app.g.tokenList);
   res.status(200).json(response);
 };
 

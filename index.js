@@ -6,11 +6,10 @@ import cors from 'cors'
 import helmet from 'helmet'
 import authRoutes from './src/routes/auth.js';
 import walletRoutes from './src/routes/wallet.js';
+import marketRoutes from './src/routes/market.js';
 import connectDB from './src/config/db.js';
 import config from './src/config.js';
-import tokenChecker from './src/tokenChecker.js';
-import mongoose from 'mongoose';
-import User from './src/models/user.js';
+import refreshCryptoData from './src/services/refreshCryptoData.js'
 
 connectDB();
 
@@ -26,11 +25,10 @@ router.get('/', (req, res) => {
     res.send('Ok');
 })
 
-
-// No token-required routes:
 app.use(bodyParser.json())
 app.use("/api/auth", authRoutes);
 app.use("/api/wallet", walletRoutes);
+app.use("/api/market", marketRoutes);
 app.use("/api", router);
 
 // All queries below this tokenChecker will be secured by token
@@ -40,3 +38,4 @@ app.listen(config.port || process.env.port || 3000);
 
 console.log("server listening on localhost:", (config.port || process.env.port || 3000));
 
+refreshCryptoData();
